@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uoft-course-finder"
+version = "1.0.0"
+description = "Search the official University of Toronto academic calendars by keyword from the command line."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "Flora Yan" }]
+keywords = ["university of toronto", "uoft", "courses", "calendar", "cli"]
+classifiers = [
+  "Environment :: Console",
+  "Intended Audience :: Education",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Education",
+  "Topic :: Utilities",
+]
+# Runtime is standard-library only on purpose. Do not add entries here.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "ruff>=0.5"]
+
+[project.urls]
+Homepage = "https://github.com/xyan029/uoft_course_finder"
+Issues = "https://github.com/xyan029/uoft_course_finder/issues"
+
+[project.scripts]
+uoft-course-finder = "uoft_course_finder.cli:main"
+
+[tool.setuptools]
+packages = ["uoft_course_finder"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+filterwarnings = ["error"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+extend-exclude = ["tests/fixtures"]
+
+[tool.ruff.lint]
+select = [
+  "E",   # pycodestyle errors
+  "W",   # pycodestyle warnings
+  "F",   # pyflakes
+  "I",   # isort
+  "B",   # bugbear
+  "UP",  # pyupgrade
+  "SIM", # simplify
+  "RUF", # ruff-specific
+  "PL",  # pylint
+]
+ignore = [
+  "PLR2004", # magic values are fine in a small CLI
+  "PLR0913", # keyword-only configuration arguments
+  "UP006",   # keep typing.List/Dict spellings: they stay valid on 3.9
+  "UP035",
+  "UP045",   # keep typing.Optional for the same reason
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["PLR2004", "S101"]
+"uoft_course_finder.py" = ["E402"]
+
+[tool.ruff.format]
+quote-style = "double"
